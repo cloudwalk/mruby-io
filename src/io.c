@@ -827,6 +827,20 @@ mrb_io_sync(mrb_state *mrb, mrb_value self)
 }
 
 mrb_value
+mrb_s__gets(mrb_state *mrb, mrb_value self)
+{
+  unsigned char sValue[128];
+  mrb_int min, max, mode, x, y;
+
+  memset(&sValue, 0, sizeof(sValue));
+
+  mrb_get_args(mrb, "iiiii", &min, &max, &mode, &x, &y);
+
+  get_string(&sValue, min, max, mode, x, y);
+
+  return mrb_str_new_cstr(mrb, sValue);
+}
+
 mrb_value
 mrb_io_s__getc(mrb_state *mrb, mrb_value klass)
 {
@@ -868,6 +882,7 @@ mrb_init_io(mrb_state *mrb)
   mrb_define_class_method(mrb, io, "select",  mrb_io_s_select,  MRB_ARGS_ANY());
   mrb_define_class_method(mrb, io, "sysopen", mrb_io_s_sysopen, MRB_ARGS_ANY());
   mrb_define_class_method(mrb, io, "_getc",    mrb_io_s__getc, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, io, "_gets",   mrb_s__gets, MRB_ARGS_REQ(5));
   mrb_define_class_method(mrb, io, "display_clear", mrb_io_s_display_clear, MRB_ARGS_NONE());
   mrb_define_class_method(mrb, io, "display_clear_line", mrb_io_s_display_clear_line, MRB_ARGS_REQ(1));
 
