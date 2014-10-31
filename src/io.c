@@ -39,6 +39,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "ui.h"
+
 
 static int mrb_io_modestr_to_flags(mrb_state *mrb, const char *modestr);
 static int mrb_io_flags_to_modenum(mrb_state *mrb, int flags);
@@ -824,6 +826,13 @@ mrb_io_sync(mrb_state *mrb, mrb_value self)
   return mrb_bool_value(fptr->sync);
 }
 
+mrb_value
+mrb_value
+mrb_io_s__getc(mrb_state *mrb, mrb_value klass)
+{
+  XuiClearKey();
+  return mrb_fixnum_value(XuiGetKey());
+}
 void
 mrb_init_io(mrb_state *mrb)
 {
@@ -839,6 +848,7 @@ mrb_init_io(mrb_state *mrb)
 #endif
   mrb_define_class_method(mrb, io, "select",  mrb_io_s_select,  MRB_ARGS_ANY());
   mrb_define_class_method(mrb, io, "sysopen", mrb_io_s_sysopen, MRB_ARGS_ANY());
+  mrb_define_class_method(mrb, io, "_getc",    mrb_io_s__getc, MRB_ARGS_NONE());
 
   mrb_define_method(mrb, io, "initialize", mrb_io_initialize, MRB_ARGS_ANY());    /* 15.2.20.5.21 (x)*/
   mrb_define_method(mrb, io, "sync",       mrb_io_sync,       MRB_ARGS_NONE());
