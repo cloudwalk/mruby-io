@@ -844,6 +844,14 @@ mrb_io_s_display_clear_line(mrb_state *mrb, mrb_value klass)
   display_clear_line(line);
   return mrb_nil_value();
 }
+
+mrb_value
+mrb_io_s_display_clear(mrb_state *mrb, mrb_value klass)
+{
+  display_clear();
+  return mrb_nil_value();
+}
+
 void
 mrb_init_io(mrb_state *mrb)
 {
@@ -860,6 +868,7 @@ mrb_init_io(mrb_state *mrb)
   mrb_define_class_method(mrb, io, "select",  mrb_io_s_select,  MRB_ARGS_ANY());
   mrb_define_class_method(mrb, io, "sysopen", mrb_io_s_sysopen, MRB_ARGS_ANY());
   mrb_define_class_method(mrb, io, "_getc",    mrb_io_s__getc, MRB_ARGS_NONE());
+  mrb_define_class_method(mrb, io, "display_clear", mrb_io_s_display_clear, MRB_ARGS_NONE());
   mrb_define_class_method(mrb, io, "display_clear_line", mrb_io_s_display_clear_line, MRB_ARGS_REQ(1));
 
   mrb_define_method(mrb, io, "initialize", mrb_io_initialize, MRB_ARGS_ANY());    /* 15.2.20.5.21 (x)*/
