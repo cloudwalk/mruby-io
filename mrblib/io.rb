@@ -398,6 +398,10 @@ class IO
 end
 
 module Kernel
+  def print_line(buf, row=0, column=0)
+    IO.print(buf, row || 0, column || 0)
+  end
+
   def getc
     IO.getc
   end
